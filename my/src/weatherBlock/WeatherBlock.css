@@ -1,0 +1,24 @@
+.windowWether {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  width: 97vw;
+  min-height: 200px;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #00000012;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  width: 75px;
+  height: 150px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+}
+.weatherBlocks {
+  display: flex;
+  flex-wrap: wrap;
+}
