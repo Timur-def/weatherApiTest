@@ -1,5 +1,10 @@
-import "./weatherBlock.css"
-export default function WeatherBlock({ temp, time, isTimeTrue,setKeyNowHourWeather }) {
+import "./weatherBlock.css";
+export default function WeatherBlock({
+  temp,
+  time,
+  isTimeTrue,
+  optionForDate,
+}) {
   return (
     <div className="windowWether">
       <h3>Прогноз на 24 часа</h3>
@@ -11,18 +16,12 @@ export default function WeatherBlock({ temp, time, isTimeTrue,setKeyNowHourWeath
             <>
               <div className="block" key={key}>
                 {isTimeTrue ? (
-                  ((setKeyNowHourWeather(key)),
-                  (
-                    <span className="timeTitle" style={{ fontWeight: "600" }}>
-                      Сейчас
-                    </span>
-                  ))
+                  <span className="timeTitle" style={{ fontWeight: "600" }}>
+                    Сейчас
+                  </span>
                 ) : (
                   <p className="timeTitle">
-                    {codeDate.toLocaleString("ru-RU", {
-                      hour: "2-digit",
-                      minute: "2-digit"
-                    })}
+                    {codeDate.toLocaleString("ru-RU", optionForDate)}
                   </p>
                 )}
                 <p>{Math.round(item)}°C</p>
@@ -34,4 +33,3 @@ export default function WeatherBlock({ temp, time, isTimeTrue,setKeyNowHourWeath
     </div>
   );
 }
-

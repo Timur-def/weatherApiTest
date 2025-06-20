@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import WeatherBlock from "./weatherBlock/WeatherBlock";
+import WindowNowDay from "./windowNowDay/WindowNowDay";
+import WindowNowTime from "./windowNowTime/WindowNowTime";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -28,7 +30,6 @@ function App() {
   const [dataDaily, setDataDaily] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [keyNowHourWeather, setKeyNowHourWeather] = useState(null);
 
   const optionForDate = {
     hour: "2-digit",
@@ -92,7 +93,7 @@ function App() {
 
   return (
     <>
-
+      {error && <p>{error.message}</p>}
       {!loading ? (
         <div className="App">
           {dataHourly?.temperature_2m && (
@@ -100,74 +101,24 @@ function App() {
               temp={dataHourly.temperature_2m}
               time={dataHourly.time}
               isTimeTrue={currentHourKey}
-              setKeyNowHourWeather={setKeyNowHourWeather}
+              optionForDate={optionForDate}
             />
           )}
           <div className="bottomWindow">
             <div className="leftBlock">
-              <div className="window">
-                <h4>
-                  Сегодня{" "}
-                  {new Date(dataDaily?.time[0]).toLocaleString("ru-RU", {
-                    day: "2-digit",
-                    month: "long",
-                  })}
-                </h4>
-                <div className="windowNowDay">
-                  <p>
-                    Макс. скорость ветра: {dataDaily?.wind_speed_10m_max[0]} км/ч
-                  </p>
-                  <p>
-                    Макс. температура:{" "}
-                    {Math.round(dataDaily?.temperature_2m_max[0])} °C
-                  </p>
-                  <p>
-                    Мин. температура:{" "}
-                    {Math.round(dataDaily?.temperature_2m_min[0])} °C
-                  </p>
-                  <p>
-                    Восход:{" "}
-                    {new Date(dataDaily?.sunrise[0]).toLocaleString(
-                      "ru-RU",
-                      optionForDate
-                    )}
-                  </p>
-                  <p>
-                    Закат:{" "}
-                    {new Date(dataDaily?.sunset[0]).toLocaleString(
-                      "ru-RU",
-                      optionForDate
-                    )}
-                  </p>
-                </div>
-              </div>
-              <div className="window">
-                <h4>На данный момент</h4>
-                <div className="windowNowTime">
-                  <p>
-                    Ощущается:{" "}
-                    {dataHourly.apparent_temperature
-                      ? Math.round(
-                          dataHourly?.apparent_temperature[keyNowHourWeather]
-                        )
-                      : null}
-                    °C
-                  </p>
-                  <p>
-                    Возможность осадков:{" "}
-                    {dataHourly.precipitation_probability
-                      ? dataHourly?.precipitation_probability[keyNowHourWeather]
-                      : null}
-                    %
-                  </p>
-                </div>
-              </div>
+              <WindowNowDay
+                optionForDate={optionForDate}
+                dataDaily={dataDaily}
+              />
+              <WindowNowTime
+                dataHourly={dataHourly}
+                currentHourKey={currentHourKey}
+              />
             </div>
-            <div className="window lineDiagramm" style={{ width: "1000px" }}>
+            <div className="window lineDiagramm">
               <h4>Диаграмма температуры за 24 часа</h4>
               <Line data={data} options={options} />
             </div>
-
             <div className="window defWindow"></div>
           </div>
         </div>

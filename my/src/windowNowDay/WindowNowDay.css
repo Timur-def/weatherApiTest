@@ -1,0 +1,8 @@
+.windowNowDay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  width: 250px;
+  min-height: 200px;
+}

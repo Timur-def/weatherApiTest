@@ -1,0 +1,9 @@
+.windowNowTime {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+  width: 250px;
+  height: 140px;
+}
