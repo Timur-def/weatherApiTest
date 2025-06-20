@@ -27,15 +27,6 @@
   color: #82b3c9;
 }
 
-.lineDiagramm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 400px;
-  width: 53vw;
-}
-
 .leftBlock {
   display: flex;
   flex-direction: column;

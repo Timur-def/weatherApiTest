@@ -3,27 +3,7 @@ import "./App.css";
 import WeatherBlock from "./weatherBlock/WeatherBlock";
 import WindowNowDay from "./windowNowDay/WindowNowDay";
 import WindowNowTime from "./windowNowTime/WindowNowTime";
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-);
+import WeatherDiagramm from "./weatherDiagramm/WeatherDiagramm";
 
 function App() {
   const [dataHourly, setDataHourly] = useState(null);
@@ -62,35 +42,6 @@ function App() {
     return new Date().getHours() === codeDate.getHours();
   });
 
-  const data = {
-    labels: dataHourly?.time.map((item, _) =>
-      new Date(item).toLocaleString("ru-RU", optionForDate)
-    ),
-    datasets: [
-      {
-        label: "",
-        data: dataHourly?.temperature_2m.map((item, _) => Math.round(item)),
-        fill: true,
-        backgroundColor: "#f5f5f520",
-        borderColor: "#f5f5f5",
-        tension: 0.01,
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-        display: false,
-      },
-      title: {
-        display: false,
-      },
-    },
-  };
-
   return (
     <>
       {error && <p>{error.message}</p>}
@@ -115,10 +66,7 @@ function App() {
                 currentHourKey={currentHourKey}
               />
             </div>
-            <div className="window lineDiagramm">
-              <h4>Диаграмма температуры за 24 часа</h4>
-              <Line data={data} options={options} />
-            </div>
+            <WeatherDiagramm dataHourly={dataHourly} optionForDate={optionForDate}/>
             <div className="window defWindow"></div>
           </div>
         </div>
