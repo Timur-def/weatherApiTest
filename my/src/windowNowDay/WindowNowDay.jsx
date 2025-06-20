@@ -11,9 +11,9 @@ export default function WindowNowDay({ dataDaily, optionForDate }) {
       </h4>
       <p>Макс. скорость ветра: {dataDaily?.wind_speed_10m_max[0]} км/ч</p>
       <p>
-        Макс. температура: {Math.round(dataDaily?.temperature_2m_max[0])} °C
+        Макс. температура: {Math.round(dataDaily?.temperature_2m_max[0])}°C
       </p>
-      <p>Мин. температура: {Math.round(dataDaily?.temperature_2m_min[0])} °C</p>
+      <p>Мин. температура: {Math.round(dataDaily?.temperature_2m_min[0])}°C</p>
       <p>
         Восход:{" "}
         {new Date(dataDaily?.sunrise[0]).toLocaleString("ru-RU", optionForDate)}

@@ -6,8 +6,7 @@ import WindowNowTime from "./windowNowTime/WindowNowTime";
 import WeatherDiagramm from "./weatherDiagramm/WeatherDiagramm";
 
 function App() {
-  const [dataHourly, setDataHourly] = useState(null);
-  const [dataDaily, setDataDaily] = useState(null);
+  const [data, setData] = useState(null||{});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,8 +26,7 @@ function App() {
         }
         const jsonData = await response.json();
         console.log(jsonData);
-        setDataHourly(jsonData.hourly);
-        setDataDaily(jsonData.daily);
+        setData(jsonData);
       } catch (err) {
         setError(err);
       } finally {
@@ -37,8 +35,14 @@ function App() {
     };
     fetchData();
   }, []);
-  const currentHourKey = dataHourly?.temperature_2m?.findIndex((_, key) => {
-    const codeDate = new Date(dataHourly.time[key]);
+
+  const { hourly, daily } = data;
+  console.log(hourly);
+  console.log(daily);
+  
+
+  const currentHourKey = hourly?.temperature_2m?.findIndex((_, key) => {
+    const codeDate = new Date(hourly.time[key]);
     return new Date().getHours() === codeDate.getHours();
   });
 
@@ -47,10 +51,10 @@ function App() {
       {error && <p>{error.message}</p>}
       {!loading ? (
         <div className="App">
-          {dataHourly?.temperature_2m && (
+          {hourly?.temperature_2m && (
             <WeatherBlock
-              temp={dataHourly.temperature_2m}
-              time={dataHourly.time}
+              temp={hourly.temperature_2m}
+              time={hourly.time}
               isTimeTrue={currentHourKey}
               optionForDate={optionForDate}
             />
@@ -59,14 +63,17 @@ function App() {
             <div className="leftBlock">
               <WindowNowDay
                 optionForDate={optionForDate}
-                dataDaily={dataDaily}
+                dataDaily={daily}
               />
               <WindowNowTime
-                dataHourly={dataHourly}
+                dataHourly={hourly}
                 currentHourKey={currentHourKey}
               />
             </div>
-            <WeatherDiagramm dataHourly={dataHourly} optionForDate={optionForDate}/>
+            <WeatherDiagramm
+              dataHourly={hourly}
+              optionForDate={optionForDate}
+            />
             <div className="window defWindow"></div>
           </div>
         </div>
